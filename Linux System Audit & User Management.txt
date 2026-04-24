@@ -1,0 +1,146 @@
+## INSTRUCTIONS
+
+1. whoami [Check the identity of the currently logged-in user]
+2. w [Check which users are currently logged into the system and what they are doing]
+3. last [View the login history of the system]
+4. uname -a && hostname && uptime [Display complete system information, the hostname, and how long the system has been running]
+5. sudo groupadd developers, sudo groupadd qa [Create the developers and qa groups]
+6. getent group developers qa [Verify the groups were created]
+7. cat /etc/group [Display the complete list of groups]
+8. sudo useradd -m -g developers dev1, sudo useradd -m -g developers dev2, sudo useradd -m -g qa qa1 [Create the users, assign them to their groups, and create their home directories]
+9. id dev1, id dev2, id qa1 [Verify they were created and assigned correctly]
+10. sudo pkill -KILL -u dev2 [Ensure dev2 has no active sessions]
+11. sudo userdel -r dev2 [Delete the account along with her home directory]
+12. id dev2 [Verify it no longer exists on the system]
+
+
+## OUTPUT
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.6.87.2-microsoft-standard-WSL2 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Apr 24 08:28:07 UTC 2026
+
+  System load:  0.0                 Processes:             66
+  Usage of /:   0.2% of 1006.85GB   Users logged in:       0
+  Memory usage: 5%                  IPv4 address for eth0: 172.23.234.132
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+This message is shown once a day. To disable it please create the
+/home/anant/.hushlogin file.
+anant@ANANT-HP-VICTUS:~$ whoami
+anant
+anant@ANANT-HP-VICTUS:~$ w
+ 08:28:32 up 0 min,  1 user,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU  WHAT
+anant    pts/1    -                08:28   25.00s  0.01s  0.01s -bash
+anant@ANANT-HP-VICTUS:~$ last
+reboot   system boot  6.6.87.2-microso Fri Apr 24 08:28   still running
+reboot   system boot  6.6.87.2-microso Fri Apr 17 11:07   still running
+reboot   system boot  6.6.87.2-microso Mon Mar 30 10:04   still running
+reboot   system boot  6.6.87.2-microso Mon Mar 30 10:03   still running
+reboot   system boot  6.6.87.2-microso Fri Mar 27 10:13   still running
+reboot   system boot  6.6.87.2-microso Mon Mar 16 10:03   still running
+reboot   system boot  6.6.87.2-microso Mon Feb  2 10:20   still running
+
+wtmp begins Mon Feb  2 10:20:00 2026
+anant@ANANT-HP-VICTUS:~$ uname -a && hostname && uptime
+Linux ANANT-HP-VICTUS 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+ANANT-HP-VICTUS
+ 08:30:21 up 2 min,  1 user,  load average: 0.00, 0.00, 0.00
+anant@ANANT-HP-VICTUS:~$ sudo groupadd developers
+[sudo] password for anant:
+anant@ANANT-HP-VICTUS:~$ sudo groupadd qa
+anant@ANANT-HP-VICTUS:~$ cat /etc/groups
+cat: /etc/groups: No such file or directory
+anant@ANANT-HP-VICTUS:~$ getent group developers qa
+developers:x:1002:
+qa:x:1003:
+anant@ANANT-HP-VICTUS:~$ cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog,anant
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:anant
+floppy:x:25:
+tape:x:26:
+sudo:x:27:anant
+audio:x:29:
+dip:x:30:anant
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:anant
+staff:x:50:
+games:x:60:
+users:x:100:anant
+nogroup:x:65534:
+systemd-journal:x:999:
+systemd-network:x:998:
+crontab:x:997:
+systemd-timesync:x:996:
+input:x:995:
+sgx:x:994:
+kvm:x:993:
+render:x:992:
+messagebus:x:101:
+syslog:x:102:
+systemd-resolve:x:991:
+uuidd:x:103:
+_ssh:x:104:
+landscape:x:105:
+polkitd:x:990:
+admin:x:106:
+netdev:x:107:
+anant:x:1000:
+docker:x:1001:anant
+developers:x:1002:
+qa:x:1003:
+anant@ANANT-HP-VICTUS:~$ sudo useradd -m -g developers dev1
+anant@ANANT-HP-VICTUS:~$ sudo useradd -m -g developers dev2
+anant@ANANT-HP-VICTUS:~$ sudo useradd -m -g qa qa1
+anant@ANANT-HP-VICTUS:~$ id dev1
+uid=1001(dev1) gid=1002(developers) groups=1002(developers)
+anant@ANANT-HP-VICTUS:~$ id dev2
+uid=1002(dev2) gid=1002(developers) groups=1002(developers)
+anant@ANANT-HP-VICTUS:~$ id qa1
+uid=1003(qa1) gid=1003(qa) groups=1003(qa)
+anant@ANANT-HP-VICTUS:~$ sudo pkill -KILL -u dev2
+anant@ANANT-HP-VICTUS:~$ sudo userdel -r dev2
+userdel: dev2 mail spool (/var/mail/dev2) not found
+anant@ANANT-HP-VICTUS:~$ sudo userdel -r dev2
+userdel: user 'dev2' does not exist
+anant@ANANT-HP-VICTUS:~$ id dev2
+id: ‘dev2’: no such user
+anant@ANANT-HP-VICTUS:~$
